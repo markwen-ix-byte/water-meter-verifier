@@ -9,10 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$host     = getenv('DB_HOST') ?: 'sql7.freesqldatabase.com';
-$dbname   = getenv('DB_NAME') ?: 'sql7826838';
-$username = getenv('DB_USER') ?: 'sql7826838';
-$password = getenv('DB_PASS') ?: '7MVcf3Ui4b';
+$host     = getenv('DB_HOST')     ?: 'sql7.freesqldatabase.com';
+$dbname   = getenv('DB_NAME')     ?: 'sql7826838';
+$username = getenv('DB_USER')     ?: 'sql7826838';
+$password = getenv('DB_PASS')     ?: '7MVcf3Ui4b';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8mb4", 
@@ -22,6 +22,8 @@ try {
                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                        PDO::ATTR_TIMEOUT => 10
                    ]);
+    // Для теста
+    // echo json_encode(["status" => "connected"]);
 } catch(PDOException $e) {
     http_response_code(500);
     echo json_encode(["error" => "DB Connection Failed", "details" => $e->getMessage()]);
