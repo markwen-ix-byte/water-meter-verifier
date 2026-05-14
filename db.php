@@ -16,15 +16,13 @@ $password = '7MVcf3Ui4b';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8mb4", 
-                   $username, 
-                   $password, 
-                   [
+                   $username, $password, [
                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                        PDO::ATTR_TIMEOUT => 10
                    ]);
 } catch(PDOException $e) {
     http_response_code(500);
-    echo json_encode(["error" => "DB Connection Failed", "details" => $e->getMessage()]);
+    echo json_encode(["error" => "DB Connection Failed"]);
     exit;
 }
 ?>
