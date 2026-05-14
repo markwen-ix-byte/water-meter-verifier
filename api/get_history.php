@@ -18,7 +18,7 @@ try {
                temperature, humidity, valve, timestamp, created_at
         FROM states 
         WHERE device_id = ? 
-        ORDER BY id DESC 
+        ORDER BY created_at DESC 
         LIMIT 20
     ");
     $stmt->execute([$device_id]);
@@ -29,7 +29,7 @@ try {
         SELECT command, value, created_at 
         FROM commands 
         WHERE device_id = ? 
-        ORDER BY id DESC 
+        ORDER BY created_at DESC 
         LIMIT 20
     ");
     $stmt2->execute([$device_id]);
