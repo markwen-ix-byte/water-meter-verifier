@@ -8,7 +8,7 @@ require_once '../db.php';
 $device_id = 'verifier_001';
 
 try {
-  $stmt = $pdo->query("SELECT * FROM states ORDER BY created_at DESC LIMIT 1");
+  $stmt = $pdo->query("SELECT * FROM states ORDER BY timestamp DESC LIMIT 1");
     $stmt->execute([$device_id]);
     $state = $stmt->fetch();
     
