@@ -1,0 +1,17 @@
+{
+    "device_id": "verifier_001",
+    "mode": "AUTO",
+    "timestamp": 1778749768,
+    "cnt_verified": 521,
+    "cnt_etalon": 521,
+    "volume_verified": 625.200000000000045474735088646411895751953125,
+    "volume_etalon": 521,
+    "error_percent": 20,
+    "temperature": 21.39999999999999857891452847979962825775146484375,
+    "humidity": 41.39999999999999857891452847979962825775146484375,
+    "valve": false,
+    "status": "ok",
+    "coeff_verified": 1.1999999999999999555910790149937383830547332763671875,
+    "coeff_etalon": 1,
+    "last_pulse_time": 1778749483
+}
