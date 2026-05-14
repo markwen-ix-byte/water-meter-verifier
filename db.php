@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Жёстко прописываем данные (для отладки)
 $host     = 'sql7.freesqldatabase.com';
 $dbname   = 'sql7826838';
 $username = 'sql7826838';
@@ -23,15 +22,9 @@ try {
                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                        PDO::ATTR_TIMEOUT => 10
                    ]);
-    
-    echo json_encode(["status" => "connected", "message" => "DB OK"]);
-    
 } catch(PDOException $e) {
     http_response_code(500);
-    echo json_encode([
-        "error" => "DB Connection Failed", 
-        "details" => $e->getMessage()
-    ]);
+    echo json_encode(["error" => "DB Connection Failed", "details" => $e->getMessage()]);
     exit;
 }
 ?>
