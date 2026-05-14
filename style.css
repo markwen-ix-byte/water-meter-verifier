@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f2b3d 0%, #1a2a4f 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+    background: #f0f4f8;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+
+header {
+    background: #0f2b3d;
+    color: white;
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+header h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.device-id {
+    background: rgba(255,255,255,0.2);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-family: monospace;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card h2 {
+    color: #1a2a4f;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    border-left: 4px solid #2c7da0;
+    padding-left: 12px;
+}
+
+/* Режим */
+.mode-card {
+    grid-column: span 2;
+}
+
+.mode-display {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.mode-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    padding: 10px 35px;
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.mode-value[data-mode="AUTO"] { background: #2c7da0; color: white; }
+.mode-value[data-mode="MANUAL"] { background: #e67e22; color: white; }
+.mode-value[data-mode="DEMO"] { background: #f39c12; color: white; }
+.mode-value[data-mode="SERVICE"] { background: #95a5a6; color: white; }
+
+.mode-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mode-auto:hover { background: #2c7da0; color: white; }
+.mode-manual:hover { background: #e67e22; color: white; }
+.mode-demo:hover { background: #f39c12; color: white; }
+.mode-service:hover { background: #95a5a6; color: white; }
+
+/* Клапан */
+.valve-card {
+    background: #e8f8f5;
+}
+
+.valve-control {
+    text-align: center;
+}
+
+.valve-status {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.valve-status strong {
+    font-size: 1.4rem;
+}
+
+.valve-btn {
+    background: #27ae60;
+    color: white;
+    font-size: 1rem;
+    padding: 12px 25px;
+}
+
+.valve-btn:hover {
+    background: #219a52;
+}
+
+.valve-hint {
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    background: #fef9e7;
+    padding: 8px;
+    border-radius: 12px;
+}
+
+/* Счётчики */
+.counters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.counter-item {
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.counter-item.verified {
+    background: #fef3c7;
+}
+
+.counter-item.etalon {
+    background: #e0f2fe;
+}
+
+.counter-label {
+    color: #475569;
+    font-size: 0.85rem;
+}
+
+.counter-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1e293b;
+}
+
+.reset-btn {
+    background: #e67e22;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.reset-btn:hover {
+    background: #d35400;
+}
+
+/* Датчики */
+.sensors-grid {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.sensor-item {
+    text-align: center;
+    background: #f8fafc;
+    padding: 15px 25px;
+    border-radius: 16px;
+    flex: 1;
+}
+
+.sensor-label {
+    display: block;
+    color: #64748b;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+}
+
+.sensor-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c7da0;
+}
+
+/* Погрешность */
+.error-card {
+    text-align: center;
+}
+
+.error-display {
+    margin: 15px 0;
+}
+
+.error-value {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.formula {
+    background: #f1f5f9;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-family: monospace;
+}
+
+/* Состояние */
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.status-item {
+    text-align: center;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.status-label {
+    display: block;
+    font-size: 0.7rem;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.status-value {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* Ручное управление */
+.manual-controls {
+    text-align: center;
+}
+
+.manual-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.manual-verified-btn {
+    background: #f39c12;
+    color: white;
+}
+
+.manual-etalon-btn {
+    background: #3498db;
+    color: white;
+}
+
+.coeff-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.btn-coeff {
+    padding: 8px 15px;
+    border: 2px solid #e67e22;
+    background: white;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-coeff:hover {
+    background: #e67e22;
+    color: white;
+}
+
+.calibration-status {
+    margin-top: 15px;
+    padding: 10px;
+    background: #fef3c7;
+    border-radius: 12px;
+}
+
+/* Демо режим */
+.demo-info {
+    text-align: center;
+    padding: 15px;
+    background: #fef9e7;
+    border-radius: 12px;
+}
+
+.demo-errors {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.demo-error {
+    padding: 5px 12px;
+    background: #e67e22;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+/* Футер */
+footer {
+    background: white;
+    padding: 20px 25px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.last-update {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.console-hint {
+    font-size: 0.75rem;
+    color: #95a5a6;
+}
+
+.unit {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-left: 4px;
+}
+
+hr {
+    margin: 15px 0;
+    border: none;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+    
+    .mode-card {
+        grid-column: span 1;
+    }
+    
+    .counters-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .sensors-grid {
+        flex-direction: column;
+    }
+    
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Умный поверитель счётчиков воды</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💧 УМНЫЙ ПОВЕРИТЕЛЬ СЧЁТЧИКОВ</h1>
+            <div class="device-id">ID: <span id="device-id">verifier_001</span></div>
+        </header>
+
+        <main>
+            <!-- Карточка режима работы -->
+            <div class="card mode-card">
+                <h2>🎮 Режим работы</h2>
+                <div class="mode-display">
+                    <span id="current-mode" class="mode-value">AUTO</span>
+                </div>
+                <div class="mode-controls">
+                    <button class="btn mode-auto" data-mode="AUTO">🔵 AUTO</button>
+                    <button class="btn mode-manual" data-mode="MANUAL">🟠 MANUAL</button>
+                    <button class="btn mode-demo" data-mode="DEMO">🟡 DEMO</button>
+                    <button class="btn mode-service" data-mode="SERVICE">⚪ SERVICE</button>
+                </div>
+            </div>
+
+            <!-- Карточка управления клапаном (только для AUTO) -->
+            <div class="card valve-card" id="valveCard">
+                <h2>🚰 Управление потоком</h2>
+                <div class="valve-control">
+                    <div class="valve-status">
+                        Клапан: <strong id="valve-status">ЗАКРЫТ</strong>
+                    </div>
+                    <button class="btn valve-btn" id="valveToggleBtn">🔓 ОТКРЫТЬ КЛАПАН</button>
+                    <div class="valve-hint" id="valveHint">
+                        💡 Открой клапан, чтобы началась автоматическая поверка
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка счётчиков -->
+            <div class="card counters-card">
+                <h2>📊 Счётчики импульсов</h2>
+                <div class="counters-grid">
+                    <div class="counter-item verified">
+                        <span class="counter-label">Поверяемый счётчик:</span>
+                        <span class="counter-value" id="cnt-verified">0</span>
+                        <span class="unit">имп</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-label">Объём (поверяемый):</span>
+                        <span class="counter-value" id="volume-verified">0.00</span>
+                        <span class="unit">л</span>
+                    </div>
+                    <div class="counter-item etalon">
+                        <span class="counter-label">Эталонный счётчик:</span>
+                        <span class="counter-value" id="cnt-etalon">0</span>
+                        <span class="unit">имп</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-label">Объём (эталонный):</span>
+                        <span class="counter-value" id="volume-etalon">0.00</span>
+                        <span class="unit">л</span>
+                    </div>
+                </div>
+                <button class="btn reset-btn" id="resetCountersBtn">🔄 Сбросить счётчики</button>
+            </div>
+
+            <!-- Карточка датчиков -->
+            <div class="card sensors-card">
+                <h2>🌡️ Датчики среды</h2>
+                <div class="sensors-grid">
+                    <div class="sensor-item">
+                        <span class="sensor-label">Температура:</span>
+                        <span class="sensor-value" id="temperature">0.0</span>
+                        <span class="unit">°C</span>
+                    </div>
+                    <div class="sensor-item">
+                        <span class="sensor-label">Влажность:</span>
+                        <span class="sensor-value" id="humidity">0.0</span>
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка погрешности -->
+            <div class="card error-card">
+                <h2>📐 Относительная погрешность</h2>
+                <div class="error-display">
+                    <span id="error-percent" class="error-value">0.00</span>
+                    <span class="unit">%</span>
+                </div>
+                <div class="formula">
+                    δ = (V<sub>пов</sub> - V<sub>эт</sub>) / V<sub>эт</sub> × 100%
+                </div>
+            </div>
+
+            <!-- Карточка состояния -->
+            <div class="card status-card">
+                <h2>🔧 Состояние устройства</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <span class="status-label">Статус:</span>
+                        <span class="status-value" id="system-status">OK</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Коэф. поверяемого:</span>
+                        <span class="status-value" id="coeff-verified">1.00</span>
+                        <span class="unit">л/имп</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">Время работы:</span>
+                        <span class="status-value" id="timestamp">0</span>
+                        <span class="unit">с</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок ручного управления (только для MANUAL) -->
+            <div class="card manual-card" id="manualCard" style="display: none;">
+                <h2>🔧 Ручная калибровка</h2>
+                <div class="manual-controls">
+                    <p>Ручное добавление импульсов:</p>
+                    <div class="manual-buttons">
+                        <button class="btn manual-verified-btn" id="manualVerifiedBtn">📈 +1 поверяемый</button>
+                        <button class="btn manual-etalon-btn" id="manualEtalonBtn">📉 +1 эталонный</button>
+                    </div>
+                    <hr>
+                    <p>Коэффициент поверяемого счётчика (K<sub>пов</sub>):</p>
+                    <div class="coeff-buttons">
+                        <button class="btn-coeff" data-coeff="0.8">0.8</button>
+                        <button class="btn-coeff" data-coeff="0.9">0.9</button>
+                        <button class="btn-coeff" data-coeff="1.0">1.0</button>
+                        <button class="btn-coeff" data-coeff="1.1">1.1</button>
+                        <button class="btn-coeff" data-coeff="1.2">1.2</button>
+                    </div>
+                    <div class="calibration-status">
+                        Текущий коэффициент: <strong id="current-coeff">1.00</strong> л/имп
+                    </div>
+                </div>
+            </div>
+
+            <!-- Блок демо-режима -->
+            <div class="card demo-card" id="demoCard" style="display: none;">
+                <h2>🎮 Демонстрационный режим</h2>
+                <div class="demo-info">
+                    <p>🤖 Автоматическая генерация импульсов активна</p>
+                    <p>Погрешность циклически изменяется:</p>
+                    <div class="demo-errors">
+                        <span class="demo-error">-5%</span>
+                        <span class="demo-error">0%</span>
+                        <span class="demo-error">+5%</span>
+                        <span class="demo-error">+10%</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="last-update">
+                Последнее обновление: <span id="last-update">---</span>
+            </div>
+            <div class="console-hint">
+                💡 Открой консоль браузера (F12) чтобы увидеть JSON-логи
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
