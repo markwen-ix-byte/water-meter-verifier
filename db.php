@@ -9,18 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Попытка подключения
-$host = getenv('DB_HOST') ?: 'sql305.infinityfree.com';
-$dbname = getenv('DB_NAME') ?: 'if0_41909845_iot_system';
-$username = getenv('DB_USER') ?: 'if0_41909845';
-$password = getenv('DB_PASS') ?: 'ZrhqgM9PBZg';
+$host     = getenv('DB_HOST') ?: 'sql7.freesqldatabase.com';
+$dbname   = getenv('DB_NAME') ?: 'sql7826838';
+$username = getenv('DB_USER') ?: 'sql7826838';
+$password = getenv('DB_PASS') ?: '7MVcf3Ui4b';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_TIMEOUT => 10
-    ]);
-    // echo json_encode(["status" => "connected"]); // можно раскомментировать для теста
+    $pdo = new PDO("mysql:host=$host;port=3306;dbname=$dbname;charset=utf8mb4", 
+                   $username, 
+                   $password, 
+                   [
+                       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                       PDO::ATTR_TIMEOUT => 10
+                   ]);
 } catch(PDOException $e) {
     http_response_code(500);
     echo json_encode(["error" => "DB Connection Failed", "details" => $e->getMessage()]);
